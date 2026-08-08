@@ -1,0 +1,36 @@
+name: Build Ffdeb package
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Theos
+        shell: bash
+        run: |
+          sudo mkdir -p /var/theos
+          if [ ! -d /var/theos/makefiles ]; then
+            sudo git clone --depth=1 https://github.com/theos/theos.git /var/theos
+          fi
+          ls -1 /var/theos/makefiles | head
+
+      - name: Build tweak package
+        shell: bash
+        run: make clean package
+
+      - name: Upload generated artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ffdeb-build-artifacts
+          path: |
+            packages/*.deb
+            .theos/packages/*.deb
+            .theos/obj/**/*.dylib

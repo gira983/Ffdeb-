@@ -321,90 +321,138 @@ Attach();
    if (MenDeal == true) {
 
    char* Gnam = (char*) [[NSString stringWithFormat:nssoxorany("Fryzz IOS PANEL 1.118.X "), ver] cStringUsingEncoding:NSUTF8StringEncoding];
-ImGui::Begin(Gnam, &MenDeal, ImGuiWindowFlags_AlwaysAutoResize);
+
+   ImGui::SetNextWindowPos(ImVec2(x, y), ImGuiCond_FirstUseEver);
+   ImGui::SetNextWindowSize(ImVec2(780.0f, 500.0f), ImGuiCond_FirstUseEver);
+
+   ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(14.0f, 12.0f));
+   ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 10.0f);
+   ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(8.0f, 6.0f));
+   ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 5.0f);
+   ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 8.0f);
+   ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(10.0f, 7.0f));
+
+   ImGui::Begin(Gnam, &MenDeal, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar);
         ImGui::PushItemWidth(ImGui::GetWindowWidth() * 0.55f);
 
-    ImGui::BeginTabBar(oxorany("Bar"), ImGuiTabBarFlags_NoTooltip);
+        ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.06f, 0.08f, 0.11f, 1.00f));
+        ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.15f, 0.19f, 0.24f, 1.00f));
+        ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(0.23f, 0.33f, 0.41f, 1.00f));
+        ImGui::PushStyleColor(ImGuiCol_FrameBgActive, ImVec4(0.18f, 0.35f, 0.50f, 1.00f));
+        ImGui::PushStyleColor(ImGuiCol_TitleBgActive, ImVec4(0.11f, 0.76f, 0.70f, 1.00f));
+        ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0.22f, 0.90f, 0.84f, 0.45f));
+        ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.90f, 0.94f, 0.96f, 1.00f));
+        ImGui::PushStyleColor(ImGuiCol_TextDisabled, ImVec4(0.62f, 0.69f, 0.74f, 1.00f));
+        ImGui::PushStyleColor(ImGuiCol_Separator, ImVec4(0.23f, 0.90f, 0.83f, 0.45f));
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.10f, 0.56f, 0.53f, 0.75f));
+        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.18f, 0.76f, 0.71f, 0.95f));
+        ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.30f, 0.88f, 0.78f, 1.00f));
+        ImGui::PushStyleColor(ImGuiCol_Tab, ImVec4(0.12f, 0.14f, 0.20f, 1.00f));
+        ImGui::PushStyleColor(ImGuiCol_TabHovered, ImVec4(0.12f, 0.76f, 0.71f, 0.72f));
+        ImGui::PushStyleColor(ImGuiCol_TabActive, ImVec4(0.11f, 0.76f, 0.70f, 1.00f));
+        ImGui::PushStyleColor(ImGuiCol_TabUnfocused, ImVec4(0.12f, 0.13f, 0.19f, 1.00f));
+        ImGui::PushStyleColor(ImGuiCol_TabUnfocusedActive, ImVec4(0.12f, 0.67f, 0.63f, 1.00f));
 
-if (ImGui::BeginTabItem(oxorany(ICON_FA_CROSSHAIRS "AimBot"))) {
+        ImGui::BeginTabBar(oxorany("Bar"), ImGuiTabBarFlags_NoTooltip);
 
-    ImGui::Checkbox(oxorany("Enable Aimbot"), &aimStart);
+        if (ImGui::BeginTabItem(oxorany(ICON_FA_CROSSHAIRS " Aimbot"))) {
+            ImGui::BeginChild(oxorany("AimbotCard"), ImVec2(0.0f, 0.0f), true, ImGuiWindowFlags_NoScrollbar);
 
-    ImGui::Separator();
+            ImGui::TextColored(ImVec4(0.34f, 0.95f, 0.80f, 1.00f), oxorany("Combat Systems"));
+            ImGui::Separator();
 
-    ImGui::Checkbox(oxorany("Enable - AimFire"), &AimFire);
-    ImGui::Checkbox(oxorany("Enable - AimScope"), &AimScope);
+            ImGui::Checkbox(oxorany("Enable Aimbot"), &aimStart);
+            ImGui::Indent();
+            ImGui::Checkbox(oxorany("AimFire"), &AimFire);
+            ImGui::Checkbox(oxorany("AimScope"), &AimScope);
+            ImGui::Unindent();
 
-    ImGui::Text(oxorany("Aim Fov"));
-    ImGui::SliderFloat(oxorany("##circle"), &AimFov, 0.0f, 360.0f);
+            ImGui::Separator();
+            ImGui::Text(oxorany("Aim Fov"));
+            ImGui::SliderFloat(oxorany("##circle"), &AimFov, 0.0f, 360.0f);
 
-    ImGui::Combo(oxorany("Aim Trigger"), &AimWhen, "Always\0Firing\0Aiming\0");
+            ImGui::Combo(oxorany("Aim Trigger"), &AimWhen, "Always\0Firing\0Aiming\0");
+            ImGui::EndChild();
+            ImGui::EndTabItem();
+        }
 
-    ImGui::EndTabItem();
-}
+        if (ImGui::BeginTabItem(oxorany(ICON_FA_EYE " Visuals"))){
+            ImGui::BeginChild(oxorany("VisualsCard"), ImVec2(0.0f, 0.0f), true, ImGuiWindowFlags_NoScrollbar);
+            ImGui::TextColored(ImVec4(0.34f, 0.95f, 0.80f, 1.00f), oxorany("ESP Systems"));
+            ImGui::Separator();
+            ImGui::Spacing();
+            ImGui::Checkbox(oxorany("Enable Esp"), &ESPEnable);
+            ImGui::Separator();
+            ImGui::Checkbox(oxorany("Esp - Lines"), &ESPLine);
+            ImGui::Checkbox(oxorany("Esp - Boxes"), &ESPBox);
+            ImGui::Checkbox(oxorany("Esp - Name"), &ESPName);
+            ImGui::Checkbox(oxorany("Esp - Health"), &ESPHealth);
+            ImGui::Spacing();
+            ImGui::EndChild();
+            ImGui::EndTabItem();
+        }
 
-if (ImGui::BeginTabItem(oxorany(ICON_FA_EYE " Esp"))){
-                ImGui::Spacing();
-                ImGui::Checkbox(oxorany("Enable Esp"), &ESPEnable);
-                ImGui::Separator();
-                ImGui::Checkbox(oxorany("Esp - Lines"), &ESPLine);
-                ImGui::Checkbox(oxorany("Esp - Boxes"), &ESPBox);
+        if (ImGui::BeginTabItem(oxorany(ICON_FA_COGS " Settings"))){
+            ImGui::BeginChild(oxorany("SettingsCard"), ImVec2(0.0f, 0.0f), true, ImGuiWindowFlags_NoScrollbar);
+            ImGui::TextColored(ImVec4(0.34f, 0.95f, 0.80f, 1.00f), oxorany("Control Room"));
+            ImGui::Separator();
+            ImGui::Checkbox(oxorany("Stream Mode"), &StreamerMode);
+            ImGui::Spacing();
+            ImGui::Checkbox(oxorany("Hide Top Label"), &hidetoplabel);
 
-                ImGui::Checkbox(oxorany("Esp - Name"), &ESPName);
-                ImGui::Checkbox(oxorany("Esp - Health"), &ESPHealth);
-                ImGui::Separator(); 
-                ImGui::Spacing();
-                ImGui::EndTabItem();
-            }
-            if (ImGui::BeginTabItem(oxorany(ICON_FA_COGS " Settings"))){
-                ImGui::Checkbox(oxorany("Stream Mode"), &StreamerMode);
-                ImGui::Spacing();
-                ImGui::Checkbox(oxorany("Hide Top Label"), &hidetoplabel);
-                
-                ImGui::Spacing();
-                ImGui::ColorEdit3(oxorany("Color Esp"), &*(float*)colorEsp, ImGuiColorEditFlags_NoInputs);
-                ImGui::Spacing();
-                if (ImGui::Combo(oxorany("Color Menu"), &style_idx, "Dark\0Light\0Classic\0"))//if (ImGui::Combo("Color Menu", &style_idx, "Dark Custom\0Dark Normal\0Light\0Classic\0"))
+            ImGui::Spacing();
+            ImGui::ColorEdit3(oxorany("Color Esp"), &*(float*)colorEsp, ImGuiColorEditFlags_NoInputs);
+            ImGui::Spacing();
+            if (ImGui::Combo(oxorany("Color Menu"), &style_idx, "Dark\0Light\0Classic\0")) {
+                switch (style_idx)
                 {
-                    switch (style_idx)
-                    {
-                        //case 0: ImGui::StyleColorsDarkMode(); break;
-                        case 0: ImGui::StyleColorsDark(); break;
-                        case 1: ImGui::StyleColorsLight(); break;
-                        case 2: ImGui::StyleColorsClassic(); break;
-                    }
+                    case 0: ImGui::StyleColorsDark(); break;
+                    case 1: ImGui::StyleColorsLight(); break;
+                    case 2: ImGui::StyleColorsClassic(); break;
                 }
-                ImGui::Spacing();
-                ImGui::EndTabItem();
             }
-            if (ImGui::BeginTabItem(oxorany(" More"))) { // Use the defined icon or replace with a string literal
-                ImGui::Spacing();
-                if(ImGui::Button(oxorany("Reset Guest"))) {Guest = true;}
+            ImGui::Spacing();
+            ImGui::EndChild();
+            ImGui::EndTabItem();
+        }
 
-ImGui::Checkbox(oxorany("Telekill Enemy"), &Telekill);
-                ImGui::EndTabItem();
-}
-if (ImGui::BeginTabItem(oxorany(ICON_FA_ADDRESS_CARD "InFo"))) {
-ImGui::SeparatorText(oxorany("Contact US"));
-ImGui::TextDisabled(oxorany("Developer:"));
-ImGui::SameLine();
-ImGui::TextLinkOpenURL(oxorany("Fryzz"), oxorany("https://t.me/g1reev7"));
-ImGui::TextDisabled(oxorany("CHANNEL:"));
-ImGui::SameLine();
-ImGui::TextLinkOpenURL(oxorany("MY CHANNEL"), oxorany("Channel Deleted"));
-ImGui::SameLine();
-ImGui::TextLinkOpenURL(oxorany("MY Chat"), oxorany("Chat Deleted"));
-ImGui::Spacing();
-ImGui::EndTabItem();
-}
+        if (ImGui::BeginTabItem(oxorany(" More"))) {
+            ImGui::BeginChild(oxorany("MoreCard"), ImVec2(0.0f, 0.0f), true, ImGuiWindowFlags_NoScrollbar);
+            ImGui::TextColored(ImVec4(0.34f, 0.95f, 0.80f, 1.00f), oxorany("Advanced Ops"));
+            ImGui::Separator();
+            ImGui::Spacing();
+            if(ImGui::Button(oxorany("Reset Guest"))) { Guest = true; }
+            ImGui::SameLine();
+            ImGui::Checkbox(oxorany("Telekill Enemy"), &Telekill);
+            ImGui::Spacing();
+            ImGui::EndChild();
+            ImGui::EndTabItem();
+        }
 
-            
-            ImGui::EndTabBar();
-        
+        if (ImGui::BeginTabItem(oxorany(ICON_FA_ADDRESS_CARD " Info"))) {
+            ImGui::BeginChild(oxorany("InfoCard"), ImVec2(0.0f, 0.0f), true, ImGuiWindowFlags_NoScrollbar);
+            ImGui::SeparatorText(oxorany("Contact US"));
+            ImGui::TextDisabled(oxorany("Developer:"));
+            ImGui::SameLine();
+            ImGui::TextLinkOpenURL(oxorany("Fryzz"), oxorany("https://t.me/g1reev7"));
+            ImGui::TextDisabled(oxorany("CHANNEL:"));
+            ImGui::SameLine();
+            ImGui::TextLinkOpenURL(oxorany("MY CHANNEL"), oxorany("Channel Deleted"));
+            ImGui::SameLine();
+            ImGui::TextLinkOpenURL(oxorany("MY Chat"), oxorany("Chat Deleted"));
+            ImGui::Spacing();
+            ImGui::EndChild();
+            ImGui::EndTabItem();
+        }
+
+        ImGui::EndTabBar();
+
         ImGui::Spacing();
         ImGui::Separator();
         ImGui::Spacing();
-        
+
+        ImGui::PopStyleColor(11);
+        ImGui::PopStyleVar(6);
         ImGui::End();
 }
 DrawEsp();
