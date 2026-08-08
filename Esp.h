@@ -22,12 +22,12 @@ static inline ImVec4  operator*(const ImVec4& lhs, const ImVec4& rhs) { return I
 
 
 template <typename T>
-inline T clamp(const T& n, const T& lower, const T& upper) {
+inline T clamp_value(const T& n, const T& lower, const T& upper) {
   return std::max(lower, std::min(n, upper));
 }
 
 inline float lerp(float a, float b, float f) {
-	return clamp<float>(a + f * (b - a),a > b ? b : a,a > b ? a : b);
+	return clamp_value<float>(a + f * (b - a),a > b ? b : a,a > b ? a : b);
 }
 
 #pragma once
