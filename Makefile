@@ -12,7 +12,7 @@ TARGET = iphone:clang:latest
 SDKVERSION =
 
 # Пути Theos
-THEOS = /var/theos
+THEOS ?= /var/theos
 THEOS_MAKE_PATH ?= $(THEOS)/makefiles
 include $(THEOS)/makefiles/common.mk
 

@@ -1,36 +1,53 @@
-name: Build Ffdeb package
+name: Build Tweak
 
 on:
   push:
+    branches: [ main, master ]
   pull_request:
+    branches: [ main, master ]
   workflow_dispatch:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: macos-14
+
+    env:
+      THEOS: ${{ github.workspace }}/theos
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Install Theos
         shell: bash
         run: |
-          sudo mkdir -p /var/theos
-          if [ ! -d /var/theos/makefiles ]; then
-            sudo git clone --depth=1 https://github.com/theos/theos.git /var/theos
-          fi
-          ls -1 /var/theos/makefiles | head
+          git clone --recursive https://github.com/theos/theos.git "$THEOS"
+          echo "$THEOS/bin" >> "$GITHUB_PATH"
+          echo "THEOS=$THEOS" >> "$GITHUB_ENV"
 
-      - name: Build tweak package
+      - name: Install ldid
+        env:
+          HOMEBREW_NO_REQUIRE_TAP_TRUST: 1
+        run: |
+          brew install ldid
+
+      - name: Install iOS SDK
         shell: bash
-        run: make clean package
+        run: |
+          mkdir -p "$THEOS/sdks"
+          curl -L --fail https://github.com/theos/sdks/releases/latest/download/iPhoneOS16.5.sdk.tar.xz -o iPhoneOS16.5.sdk.tar.xz
+          tar xf iPhoneOS16.5.sdk.tar.xz -C "$THEOS/sdks/"
 
-      - name: Upload generated artifacts
+      - name: Build with Theos
+        shell: bash
+        run: |
+          make clean
+          make package
+
+      - name: Upload .deb
         uses: actions/upload-artifact@v4
         with:
-          name: ffdeb-build-artifacts
+          name: tweak-deb
           path: |
+            *.deb
             packages/*.deb
-            .theos/packages/*.deb
-            .theos/obj/**/*.dylib
+            .theos/**/*.deb
