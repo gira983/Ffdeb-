@@ -352,6 +352,16 @@ Attach();
         ImGui::PushStyleColor(ImGuiCol_TabActive, ImVec4(0.11f, 0.76f, 0.70f, 1.00f));
         ImGui::PushStyleColor(ImGuiCol_TabUnfocused, ImVec4(0.12f, 0.13f, 0.19f, 1.00f));
         ImGui::PushStyleColor(ImGuiCol_TabUnfocusedActive, ImVec4(0.12f, 0.67f, 0.63f, 1.00f));
+        ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.10f, 0.12f, 0.15f, 0.88f));
+        ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.13f, 0.76f, 0.70f, 0.65f));
+        ImGui::PushStyleColor(ImGuiCol_HeaderHovered, ImVec4(0.14f, 0.86f, 0.79f, 0.95f));
+        ImGui::PushStyleColor(ImGuiCol_HeaderActive, ImVec4(0.30f, 0.88f, 0.78f, 1.00f));
+
+        ImGui::Spacing();
+        ImGui::TextColored(ImVec4(0.34f, 0.95f, 0.80f, 1.00f), oxorany("// FRYZZ CONTROL"));
+        ImGui::SameLine(ImGui::GetWindowWidth() - 210.0f);
+        ImGui::TextDisabled(oxorany("ONLINE"));
+        ImGui::Separator();
 
         ImGui::BeginTabBar(oxorany("Bar"), ImGuiTabBarFlags_NoTooltip);
 
@@ -360,6 +370,7 @@ Attach();
 
             ImGui::TextColored(ImVec4(0.34f, 0.95f, 0.80f, 1.00f), oxorany("Combat Systems"));
             ImGui::Separator();
+            ImGui::Spacing();
 
             ImGui::Checkbox(oxorany("Enable Aimbot"), &aimStart);
             ImGui::Indent();
@@ -367,11 +378,13 @@ Attach();
             ImGui::Checkbox(oxorany("AimScope"), &AimScope);
             ImGui::Unindent();
 
+            ImGui::Spacing();
             ImGui::Separator();
             ImGui::Text(oxorany("Aim Fov"));
             ImGui::SliderFloat(oxorany("##circle"), &AimFov, 0.0f, 360.0f);
 
             ImGui::Combo(oxorany("Aim Trigger"), &AimWhen, "Always\0Firing\0Aiming\0");
+            ImGui::Spacing();
             ImGui::EndChild();
             ImGui::EndTabItem();
         }
@@ -396,8 +409,8 @@ Attach();
             ImGui::BeginChild(oxorany("SettingsCard"), ImVec2(0.0f, 0.0f), true, ImGuiWindowFlags_NoScrollbar);
             ImGui::TextColored(ImVec4(0.34f, 0.95f, 0.80f, 1.00f), oxorany("Control Room"));
             ImGui::Separator();
-            ImGui::Checkbox(oxorany("Stream Mode"), &StreamerMode);
             ImGui::Spacing();
+            ImGui::Checkbox(oxorany("Stream Mode"), &StreamerMode);
             ImGui::Checkbox(oxorany("Hide Top Label"), &hidetoplabel);
 
             ImGui::Spacing();
